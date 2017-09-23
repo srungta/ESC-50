@@ -12,7 +12,7 @@ import numpy
 from helpers import *
 
 OUTPUT_DATASET = "sounddataset.h5"
-MINIMUM_NUMBER_OF_FEATURES = 10
+MINIMUM_NUMBER_OF_FEATURES = 160703
 # In[2]:
 # Take folder inputs from command line.
 
@@ -43,7 +43,6 @@ def main():
         line_number += 1
 
     # In[]
-
     for folder in source_sub_folders:
         print("\nChecking ", folder, ".")
         data_tag = get_data_tag_from_folder_name(folder)
@@ -55,13 +54,9 @@ def main():
             features_list = numpy.array(features)
             features_list = features_list.reshape((-1, 1))
             if 'dataset' not in locals():
-                dataset = features_list
+                dataset = features_list[:MINIMUM_NUMBER_OF_FEATURES,:]
             else:
-                if features_list.shape[0] != dataset.shape[0] :
-                    print(" Sadness at file ", source_folder, folder, sound_file)
-                    continue
-                else:
-                    dataset = np.hstack((dataset, features_list))
+                dataset = np.hstack((dataset, features_list[:MINIMUM_NUMBER_OF_FEATURES,:]))
             print("Added ", sound_file, " to dataset")
     write_dataset_to_file(destination_folder, OUTPUT_DATASET, dataset)
 
