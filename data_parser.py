@@ -9,13 +9,9 @@ This is a script file to pick up the OGG files from the subfolders and put them 
 # Import the packages you need
 import sys
 import numpy
-from helpers import get_sound_files, get_subfolders, validate_path, add_to_dataset, get_data_tag_from_folder_name,get_features_from_sound_file
+from helpers import *
 
 OUTPUT_DATASET = "sounddataset.h5"
-
-if __name__ == "__main__":
-    # execute only if run as a script
-    main()
 # In[2]:
 # Take folder inputs from command line.
 
@@ -46,7 +42,7 @@ def main():
         line_number += 1
 
     # In[]
-    dataset = numpy.random.randn(2,2)
+    dataset = []
 
     for folder in source_sub_folders:
         print("\nChecking ", folder, ".")
@@ -55,9 +51,14 @@ def main():
         print("Found ", len(sound_files_in_this_folder), " sound files in this folder.")
         for sound_file in sound_files_in_this_folder:
             print("Analysing the file : ", sound_file)
-            features = get_features_from_sound_file(source_folder,folder,sound_file)
+            features, sample_rate = get_features_from_sound_file(source_folder, folder, sound_file)
             add_to_dataset(dataset, data_tag, features)
             print("Added ", sound_file, " to dataset\n")
 
 
-write_dataset_to_file(OUTPUT_DATASET, dataset)
+    write_dataset_to_file(destination_folder, OUTPUT_DATASET, dataset)
+
+
+if __name__ == "__main__":
+    # execute only if run as a script
+    main()
