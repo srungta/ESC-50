@@ -9,6 +9,9 @@ Created on Sat Sep 23 19:38:41 2017
 import os
 import soundfile as sf
 import h5py
+import sys
+import numpy as np
+
 # In[]
 def validate_path(path):
     '''
@@ -36,16 +39,14 @@ def get_data_tag_from_folder_name(folder):
     '''
     return folder[6:]
 
-def  get_features_from_sound_file(source_folder, folder, sound_file):
+def get_features_from_sound_file(source_folder, folder, sound_file):
     path = os.path.join(source_folder, folder, sound_file)
     data, samplerate = sf.read(path)
     return data, samplerate
 
 def write_dataset_to_file(destination_folder, filename, dataset):
     path = os.path.join(destination_folder, filename)
-    h5f = h5py.File(path, 'w')
-    h5f.create_dataset('sounds', data=dataset)
+    h5f = h5py.File(path, "w")
+    h5f.create_dataset("sounds", data=dataset)
     h5f.close()
 
-def add_to_dataset(dataset, data_tag, features):
-    pass
