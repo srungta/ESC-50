@@ -50,7 +50,7 @@ def main():
         print("Found ", len(sound_files_in_this_folder), " sound files in this folder.")
         for sound_file in sound_files_in_this_folder:
             print("Analysing the file : ", sound_file)
-            features, sample_rate = get_features_from_sound_file(source_folder, folder, sound_file)
+            features = get_features_from_sound_file(source_folder, folder, sound_file)
             features_list = numpy.array(features)
             features_list = features_list.reshape((-1, 1))
             # Add features to dataset
