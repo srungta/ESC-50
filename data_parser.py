@@ -50,15 +50,22 @@ def main():
         print("Found ", len(sound_files_in_this_folder), " sound files in this folder.")
         for sound_file in sound_files_in_this_folder:
             print("Analysing the file : ", sound_file)
-            features, sample_rate = get_features_from_sound_file(source_folder, folder, sound_file)
+            # features, sample_rate = get_features_from_sound_file(source_folder, folder, sound_file)
             features_list = numpy.array(features)
             features_list = features_list.reshape((-1, 1))
+            # Add features to dataset
             if 'dataset' not in locals():
                 dataset = features_list[:MINIMUM_NUMBER_OF_FEATURES,:]
             else:
                 dataset = np.hstack((dataset, features_list[:MINIMUM_NUMBER_OF_FEATURES,:]))
+            # Add tags to dataset
+            if 'dataset_y' not in locals():
+                dataset_y = np.array([data_tag.encode('utf8') ])
+            else:
+                dataset_y = np.hstack((dataset_y, [data_tag.encode('utf8') ]))
             print("Added ", sound_file, " to dataset")
-    write_dataset_to_file(destination_folder, OUTPUT_DATASET, dataset)
+
+    write_dataset_to_file(destination_folder, OUTPUT_DATASET, dataset, dataset_y)
 
 
 if __name__ == "__main__":

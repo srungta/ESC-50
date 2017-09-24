@@ -44,9 +44,10 @@ def get_features_from_sound_file(source_folder, folder, sound_file):
     data, samplerate = sf.read(path)
     return data, samplerate
 
-def write_dataset_to_file(destination_folder, filename, dataset):
+def write_dataset_to_file(destination_folder, filename, features,tags):
     path = os.path.join(destination_folder, filename)
     h5f = h5py.File(path, "w")
-    h5f.create_dataset("sounds", data=dataset)
+    h5f.create_dataset("sounds", data=features)
+    h5f.create_dataset("tags", data=tags)
     h5f.close()
 
